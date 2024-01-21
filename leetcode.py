@@ -69,3 +69,193 @@ class Solution:
 # Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
 # The overall run time complexity should be O(log (m+n)).
 
+
+# 9. Palindrome Number
+# Given an integer x, return true if x is a palindrome, and false otherwise.
+    
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x<0:
+            return False
+        n = 0
+        xc = x
+        while xc!=0:
+            n = n*10+xc%10
+            xc = xc // 10
+        if n == x:
+            return True
+        return False
+
+
+# 13. Roman to Integer
+# Given a roman numeral, convert it to an integer.
+
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        rim = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        n = 0
+        i = 0
+        for i in range(1, len(s)):
+            if rim[s[i]]>rim[s[i-1]]:
+                n -= rim[s[i-1]]
+            else:
+                n += rim[s[i-1]]
+        n += rim[s[i]]
+        return n
+
+# 14. Longest Common Prefix
+# Write a function to find the longest common prefix string amongst an array of strings.
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        pref = ''
+        for j in range(len(strs[0])):
+            for i in range(len(strs)):
+                if len(strs[i])<=j:
+                    return pref
+                if strs[i][j]!=strs[0][j]:
+                    return pref
+            pref += strs[0][j]
+        return pref
+            
+
+# 20. Valid Parentheses
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        opened = []
+        for i in s:
+            if i in ['(', '{', '[']:
+                opened.append(i)
+            if i in [')', '}', ']']:
+                if len(opened)>=1:
+                    if i==')' and opened[-1]=='(':
+                        opened.pop()
+                    elif i=='}' and opened[-1]=='{':
+                        opened.pop()
+                    elif i==']' and opened[-1]=='[':
+                        opened.pop()
+                    else:
+                        return False
+                else:
+                    return False
+        if len(opened)>=1:
+            return False
+        return True
+
+
+
+# 21. Merge Two Sorted Lists
+# You are given the heads of two sorted linked lists list1 and list2.
+# Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
+# Return the head of the merged linked list.
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        head = ListNode()
+        curr = head
+        while list1 and list2:
+            if list1.val<=list2.val:
+                curr.next = list1
+                curr = list1 
+                list1 = list1.next
+            else:
+                curr.next = list2
+                curr = list2
+                list2 = list2.next
+        if list1 or list2:
+            curr.next = list1 if list1 else list2 
+        return head.next
+
+# 26. Remove Duplicates from Sorted Array
+# Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        n = 1
+        l = nums[-1]
+        i = 1
+        if len(nums)==1:
+            return 1
+        while nums[i]!=l:
+            if nums[i]!=nums[i-1]:
+                nums[n] = nums[i]
+                n += 1
+            i += 1
+        if nums[i]!=nums[i-1]:
+            nums[n] = nums[i]
+            n += 1
+        return n
+
+
+# 27. Remove Element
+# Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        n = 0
+        for i in range(len(nums)):
+            if nums[i]!=val:
+                nums[n] = nums[i]
+                n += 1
+        return n
+
+# 35. Search Insert Position
+# Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        for i, j in enumerate(nums):
+            if target<=j:
+                return i
+        return len(nums)
+
+# 70. Climbing Stairs
+# You are climbing a staircase. It takes n steps to reach the top.
+# Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+def factorial(n):
+    s = 1
+    for i in range(1, n+1):
+        s *= i
+    return s
+
+def sochetanie(a, b):
+    return factorial(b) / factorial(b - a) / factorial(a)
+
+class Solution(object):
+    def climbStairs(self, n):
+        if n==1:
+            return 1
+        s = 0 
+        for i in range(n//2+1):
+            s += sochetanie(i, i+n-i*2)
+        return int(s)
+        
+# 121. Best Time to Buy and Sell Stock
+# You are given an array prices where prices[i] is the price of a given stock on the ith day.
+# You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+# Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+class Solution(object):
+    def maxProfit(self, prices):
+        min_price = prices[0]
+        max_profit = 0
+
+        for i in range(1, len(prices)):
+            price = prices[i]
+            max_profit = max(price - min_price, max_profit)
+            min_price = min(price, min_price)
+
+        return max_profit
+
+
+
+    
+
