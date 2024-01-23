@@ -257,5 +257,77 @@ class Solution(object):
 
 
 
-    
+# 101. Symmetric Tree
+# Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        left_side = root
+        right_side = root
+
+        def check_sides(left_side, right_side):
+            if left_side.val != right_side.val:
+                return False
+            if left_side.left and right_side.right:
+                f = check_sides(left_side.left, right_side.right)
+                if f == 0:
+                    return False
+            elif left_side.left or right_side.right: 
+                return False
+            if left_side.right and right_side.left:
+                f = check_sides(left_side.right, right_side.left)
+                if f == 0:
+                    return False
+            elif left_side.right or right_side.left: 
+                return False
+            return True
+        
+        return check_sides(left_side, right_side)
+
+
+# 104. Maximum Depth of Binary Tree
+# Given the root of a binary tree, return its maximum depth.
+# A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        
+        if not root:
+            return 0 
+        def check_depth(curr):
+            if curr.left or curr.right:
+                if curr.left:
+                    leftl= check_depth(curr.left)
+                else:
+                    leftl= 0
+                if curr.right:
+                    rightl= check_depth(curr.right) 
+                else:
+                    rightl= 0
+                if leftl>=rightl:
+                    return 1 + leftl
+                else:
+                    return 1 + rightl
+            return 1
+        
+        return check_depth(root)
+
+                
+
+
+
+
+
+
 
