@@ -325,8 +325,43 @@ class Solution:
 
                 
 
+# 5. Longest Palindromic Substring
+# Given a string s, return the longest palindromic substring in s.
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        for maxl in range(n, 1, -1):
+            for j in range(0, n-maxl+1):
+                x = 0
+                while s[j+x]==s[maxl+j-x-1] and x<maxl//2:
+                    x += 1
+                if x>=maxl//2:
+                    return s[j:j+maxl]
+        return s[0]
 
 
+# 11. Container With Most Water
+# You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+# Find two lines that together with the x-axis form a container, such that the container contains the most water.
+# Return the maximum amount of water a container can store.
+
+class Solution:
+    def maxArea(self, height) -> int:
+        n = len(height)-1
+        m = 0 
+        max_pool = 0
+        while m<n:
+            if height[m]>height[n]:
+                curr_pool = height[n]*(n-m)
+                n -= 1
+            else:
+                curr_pool = height[m]*(n-m)
+                m += 1
+            if curr_pool>max_pool:
+                max_pool = curr_pool
+
+        return max_pool
 
 
 
