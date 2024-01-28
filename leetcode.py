@@ -364,5 +364,54 @@ class Solution:
         return max_pool
 
 
+# 15. 3Sum
+# Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+# Notice that the solution set must not contain duplicate triplets.
 
+def partition(array, low, high):
+    pivot = array[high]
+    i = low - 1
+    for j in range(low, high):
+        if array[j] <= pivot:
+            i = i + 1
+            array[i], array[j] = array[j], array[i]
+    array[i + 1], array[high] = array[high], array[i + 1]
+    return i + 1
 
+def quickSort(array, low, high):
+	if low < high:
+		pi = partition(array, low, high)
+		quickSort(array, low, pi - 1)
+		quickSort(array, pi + 1, high)
+
+class Solution:
+    def threeSum(self, nums):
+        result = []
+        n = len(nums)
+        quickSort(nums, 0, n-1)
+        if nums[0]>0 or nums[n-1]<0:
+            return result
+        i = 0
+        j = n - 1
+        while nums[i]<=0 and i<n-2:
+            curr = nums[i]
+            while nums[j]>-nums[i]*2 and j>i:
+                j -= 1
+            left = i+1
+            right = j
+            while left<right and nums[right]>=0:
+                if nums[left]+nums[right]==-nums[i]:
+                    if len(result)==0:
+                        result.append([nums[i], nums[left], nums[right]])
+                    elif nums[i]!=result[-1][0] or nums[right]!=result[-1][2]:
+                        result.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+                elif nums[left]+nums[right]>-nums[i]:
+                    right -=1
+                else:
+                    left +=1
+            i += 1
+            while nums[i]==curr and i<n-1:
+                i += 1
+        return result
