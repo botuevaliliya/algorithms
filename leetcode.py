@@ -464,8 +464,24 @@ class Solution:
                 return True
         return False
 
+# 22. Generate Parentheses
+# Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = []
 
+        def add_bracket(strn, fo, fc):
+            if fo==n and fc==n:
+                result.append(strn)
+                return 
+            if fo<n:
+                add_bracket(strn+'(', fo+1, fc)
+            if fc<n and fc<fo:
+                add_bracket(strn+')', fo, fc+1)
+        
+        add_bracket('(', 1, 0)
+        return result
 
 
 
