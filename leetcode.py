@@ -484,6 +484,92 @@ class Solution:
         return result
 
 
+# 169. Majority Element
+# Given an array nums of size n, return the majority element.
+# The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        n = 0
+        value = 0
+        for i in range(len(nums)):
+            if n == 0:
+                value = nums[i]
+            if nums[i]==value:
+                n += 1
+            else:
+                n -= 1
+        return value
+
+
+# 206. Reverse Linked List
+# Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        root = None
+        while head:
+            head.next, root, head = root, head, head.next
+        
+        return root
+
+# 226. Invert Binary Tree
+# Given the root of a binary tree, invert the tree, and return its root.
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return 
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root 
+
+# 234. Palindrome Linked List
+# Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        root = ListNode()
+        head_head = head
+        head_root = root
+        while head:
+            root.val = head.val
+            root.next = ListNode()
+            head = head.next
+            root = root.next
+
+        end = None
+        while head_head:
+            head_head.next, end, head_head = end, head_head, head_head.next
+
+        while head_root and end:
+            if head_root.val!=end.val:
+                return False
+            head_root = head_root.next
+            end = end.next
+        return True
+
+
+        
+
+
 
 
 
