@@ -18,10 +18,6 @@ class Solution:
 # You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 # You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         curr = ListNode(0)
@@ -151,11 +147,6 @@ class Solution:
 # Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
 # Return the head of the merged linked list.
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         head = ListNode()
@@ -260,12 +251,6 @@ class Solution(object):
 # 101. Symmetric Tree
 # Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         left_side = root
@@ -295,11 +280,6 @@ class Solution:
 # Given the root of a binary tree, return its maximum depth.
 # A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         
@@ -447,11 +427,6 @@ class Solution:
 # There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
 # Return true if there is a cycle in the linked list. Otherwise, return false.
 
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         if not head:
@@ -505,11 +480,6 @@ class Solution:
 # 206. Reverse Linked List
 # Given the head of a singly linked list, reverse the list, and return the reversed list.
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         root = None
@@ -520,12 +490,6 @@ class Solution:
 
 # 226. Invert Binary Tree
 # Given the root of a binary tree, invert the tree, and return its root.
-
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -538,11 +502,6 @@ class Solution:
 
 # 234. Palindrome Linked List
 # Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
@@ -568,11 +527,6 @@ class Solution:
 
 # 160. Intersection of Two Linked Lists
 # Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
-
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
 
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode):
@@ -636,6 +590,38 @@ class Solution:
         if nums[r]==target:
             return r
         return -1
+
+# 118. Pascal's Triangle
+# Given an integer numRows, return the first numRows of Pascal's triangle.
+
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        result = [[1]]
+
+        def getcalc(result):
+            result1 = [1]
+            for i in range(1, len(result)):
+                result1.append(result[i]+result[i-1])
+            result1.append(1)
+            return result1
+
+        while numRows>1:
+            numRows -= 1
+            result.append(getcalc(result[-1]))
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
