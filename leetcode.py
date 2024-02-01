@@ -733,3 +733,53 @@ class Solution:
                 return -1
         return -1
 
+# 34. Find First and Last Position of Element in Sorted Array
+# Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+# If target is not found in the array, return [-1, -1].
+# You must write an algorithm with O(log n) runtime complexity.
+
+class Solution:
+    def searchRange(self, nums, target: int):
+        l = 0 
+        r = len(nums)-1
+        if nums==[]:
+            return [-1, -1]
+        m = 0
+        if nums[l]==target:
+            m=l
+        if nums[r]==target:
+            m=r
+        while l<r-1:
+            m = l+(r-l)//2
+            if nums[m]==target:
+                break 
+            elif nums[l]==target:
+                m=l
+                break
+            elif nums[r]==target:
+                m=r
+                break
+            elif nums[m]>target:
+                r = m 
+            else:
+                l = m
+        k = m
+        if nums[m]==target:
+            while k>=0 and nums[k]==target:
+                k -= 1
+            while m<=r and nums[m]==target:
+                m += 1
+            return [k+1, m-1]
+        return [-1, -1]
+
+
+
+
+
+
+
+
+
+
+
+
