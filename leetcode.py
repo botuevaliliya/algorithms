@@ -651,8 +651,48 @@ class Solution:
         return headc
 
 
+# 31. Next Permutation
+# A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
 
+def partition(array, low, high, asc):
+    pivot = array[high]
+    i = low - 1
+    for j in range(low, high):
+        if array[j] <= pivot and asc==1:
+            i = i + 1
+            array[i], array[j] = array[j], array[i]
+        if array[j] >= pivot and asc==0:
+            i = i + 1
+            array[i], array[j] = array[j], array[i]
+    array[i + 1], array[high] = array[high], array[i + 1]
+    return i + 1
 
+def quickSort(array, low, high, asc):
+	if low < high:
+		pi = partition(array, low, high, asc)
+		quickSort(array, low, pi - 1, asc)
+		quickSort(array, pi + 1, high, asc)
+
+class Solution:
+    def nextPermutation(self, nums) -> None:
+        l = len(nums)
+        n = l-1
+        while n>0 and nums[n-1]>=nums[n]:
+            n -= 1
+        if n==0:
+            quickSort(nums, 0, l-1, 1)
+            return
+        m = 101
+        mi = l
+        for i in range(n, l):
+            if nums[i]<m and nums[i]>nums[n-1]:
+                m = nums[i]
+                mi = i
+        if mi!=l:
+            nums[n-1], nums[mi] = m, nums[n-1]
+            quickSort(nums, n, l-1, 1)
+            return
+        quickSort(nums, n-1, l-1, 0)
 
 
 
