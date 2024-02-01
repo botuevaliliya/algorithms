@@ -630,9 +630,25 @@ class Solution:
         depth(root)
         return max(result)
 
+# 24. Swap Nodes in Pairs
+# Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
 
-
-
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        n = 0
+        if head and head.next:
+            headc = head.next
+        else:
+            headc = head
+        curr = ListNode()
+        while head and head.next:
+            tmp = head.next
+            head.next = head.next.next
+            tmp.next = head
+            curr.next = tmp
+            curr = head
+            head = head.next
+        return headc
 
 
 
