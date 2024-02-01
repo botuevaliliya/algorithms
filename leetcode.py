@@ -773,9 +773,34 @@ class Solution:
         return [-1, -1]
 
 
+# 39. Combination Sum
+# Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+# The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+# The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
 
+class Solution:
+    def combinationSum(self, candidates, target: int):
+        result = []
 
-
+        def all_solutions(comb, s):
+            if s>target:
+                return 
+            if s==target:
+                for res in result:
+                    if res==comb:
+                        return
+                result.append(comb)
+                return 
+            for i in candidates:
+                if comb==[]:
+                    tmp = comb + [i]
+                    all_solutions(tmp, s+i)
+                elif i>=comb[-1]:
+                    tmp = comb + [i]
+                    all_solutions(tmp, s+i)
+        
+        all_solutions([], 0)
+        return result
 
 
 
