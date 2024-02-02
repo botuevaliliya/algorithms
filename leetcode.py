@@ -879,6 +879,48 @@ class Solution:
                 has[k].append(i)
         return list(has.values())
 
+# 54. Spiral Matrix
+# Given an m x n matrix, return all elements of the matrix in spiral order.
+
+class Solution:
+    def spiralOrder(self, matrix):
+        m = len(matrix)
+        n = len(matrix[0])
+        result = []
+        i = 0
+        j = 0
+        s = n*m
+
+        def add_line(i, j, point, s, n, m):
+            if s==0:
+                return 
+            if point=='r':
+                for incr in range(n):
+                    result.append(matrix[i][j+incr])
+                s -= n
+                m -= 1
+                add_line(i+1, j+incr, 'd', s, n, m)
+            if point=='d':
+                for incr in range(m):
+                    result.append(matrix[i+incr][j])
+                s -= m
+                n -= 1
+                add_line(i+incr, j-1, 'l', s, n, m)
+            if point=='l':
+                for incr in range(n):
+                    result.append(matrix[i][j-incr])
+                s -= n
+                m -= 1
+                add_line(i-1, j-incr, 'u', s, n, m)
+            if point=='u':
+                for incr in range(m):
+                    result.append(matrix[i-incr][j])
+                s -= m
+                n -= 1
+                add_line(i-incr, j+1, 'r', s, n, m)
+            
+        add_line(0, 0, 'r', s, n, m)
+        return result
 
 
 
