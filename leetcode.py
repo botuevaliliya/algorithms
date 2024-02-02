@@ -825,6 +825,40 @@ class Solution:
             qty += 1
         return qty
 
+# 46. Permutations
+# Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        n = len(nums)
+
+        def all_solutions(comb, s):
+            if s==n:
+                result.append(comb)
+                return 
+            for i in nums:
+                if comb==[]:
+                    tmp = comb + [i]
+                    all_solutions(tmp, s+1)
+                elif i not in comb:
+                    tmp = comb + [i]
+                    all_solutions(tmp, s+1)
+        
+        all_solutions([], 0)
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
