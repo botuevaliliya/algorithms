@@ -802,8 +802,28 @@ class Solution:
         all_solutions([], 0)
         return result
 
+# 45. Jump Game II
+# You are given a 0-indexed array of integers nums of length n. You are initially positioned at nums[0].
+# Each element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where: 0 <= j <= nums[i] and i + j < n
+# Return the minimum number of jumps to reach nums[n - 1]. The test cases are generated such that you can reach nums[n - 1].
 
-
+class Solution:
+    def jump(self, nums) -> int:
+        n = len(nums) - 1
+        i = n
+        mi = n
+        qty = 0
+        while i>0:
+            k = mi-1
+            m = mi-1
+            while k>=0:
+                if mi-k<=nums[k]:
+                    m = k
+                k -= 1
+            i = m
+            mi = i
+            qty += 1
+        return qty
 
 
 
