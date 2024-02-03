@@ -1059,6 +1059,53 @@ class Solution:
         return False
 
 
+# 75. Sort Colors
+# Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+# We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+# You must solve this problem without using the library's sort function.
+
+class Solution:
+    def sortColors(self, nums):
+        l = 0
+        r = len(nums) - 1
+        fl = 0
+        fr = 0
+        while l<r and (fl!=-1 or fr!=-1):
+            mn = l
+            while mn<=r and nums[mn]!=0:
+                mn += 1
+            if mn == r+1:
+                fl = -1
+            elif fl!= -1:
+                nums[mn], nums[l] = nums[l], nums[mn]
+                l += 1
+            mx = r 
+            while mx>=l and nums[mx]!=2:
+                mx -= 1
+            if mx == l-1:
+                fr = -1
+            elif fr!=-1:
+                nums[mx], nums[r] = nums[r], nums[mx]
+                r -= 1
+
+# 78. Subsets
+# Given an integer array nums of unique elements, return all possible subsets (the power set).
+# The solution set must not contain duplicate subsets. Return the solution in any order.
+
+class Solution:
+    def subsets(self, nums):
+        result = []
+        n = len(nums)
+
+        def all_subsets(ind, n, sub):
+            if ind==n:
+                result.append(sub)
+                return
+            all_subsets(ind+1, n, sub+[nums[ind]])
+            all_subsets(ind+1, n, sub)
+
+        all_subsets(0, n, [])
+        return result
 
 
 
