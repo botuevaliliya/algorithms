@@ -977,7 +977,27 @@ class Solution:
             result.append([])
         return result[m-1][n-1]
 
+# 64. Minimum Path Sum
+# Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+# Note: You can only move either down or right at any point in time.
 
+class Solution:
+    def minPathSum(self, grid):
+        m = len(grid)
+        n = len(grid[0])
+        result = []
+        for i in range(m):
+            result.append([])
+            for j in range(n):
+                if i==0 and j==0:
+                    result[i].append(grid[i][j])
+                elif i==0:
+                    result[i].append(grid[i][j]+result[i][j-1])
+                elif j==0:
+                    result[i].append(grid[i][j]+result[i-1][j])
+                else:
+                    result[i].append(min(result[i-1][j]+grid[i][j], grid[i][j] + result[i][j-1]))
+        return result[m-1][n-1]
 
 
 
