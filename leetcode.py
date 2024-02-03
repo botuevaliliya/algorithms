@@ -1021,8 +1021,42 @@ class Solution:
             for i in range(m):
                 matrix[i][j]=0
                 
+# 74. Search a 2D Matrix
+# You are given an m x n integer matrix matrix with the following two properties:
+# Each row is sorted in non-decreasing order.
+# The first integer of each row is greater than the last integer of the previous row.
+# Given an integer target, return true if target is in matrix or false otherwise.
+# You must write a solution in O(log(m * n)) time complexity.
 
-
+class Solution:
+    def searchMatrix(self, matrix, target):
+        left = 0 
+        right = len(matrix)-1
+        while left<right-1:
+            middle = left+(right-left)//2
+            if matrix[middle][-1]==target:
+                left = middle
+                break
+            elif matrix[middle][-1]>target:
+                right = middle 
+            else:
+                left = middle
+        if matrix[left][-1]<target:
+            left = right 
+        l = 0 
+        right = len(matrix[0])-1
+        while l<right-1:
+            middle = l+(right-l)//2
+            if matrix[left][middle]==target:
+                l = middle
+                break
+            elif matrix[left][middle]>target:
+                right = middle 
+            else:
+                l = middle
+        if matrix[left][right]==target or matrix[left][l]==target:
+            return True
+        return False
 
 
 
