@@ -937,7 +937,23 @@ class Solution:
             return True
         return False
 
+# 56. Merge Intervals
+# Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
 
+class Solution:
+    def merge(self, intervals):
+        n = len(intervals)
+        intervals = sorted(intervals)
+        result = [intervals[0]]
+        for i in range(1, n):
+            if intervals[i][0]<=result[-1][1]:
+                if result[-1][1]<intervals[i][1]:
+                    result[-1][1] = intervals[i][1]
+            else:
+                result.append(intervals[i])
+                
+        return result
+            
 
 
 
