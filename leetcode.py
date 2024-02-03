@@ -1107,8 +1107,27 @@ class Solution:
         all_subsets(0, n, [])
         return result
 
+# 98. Validate Binary Search Tree
+# Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+# A valid BST is defined as follows:
+# The left subtree of a node contains only nodes with keys less than the node's key.
+# The right subtree of a node contains only nodes with keys greater than the node's key.
+# Both the left and right subtrees must also be binary search trees.
 
-
+class Solution:
+    def isValidBST(self, root):
+        
+        def isValidBST1(root, mn, mx):
+            if not root:
+                return True
+            if root.val<=mn or root.val>=mx:
+                return False
+            l = isValidBST1(root.left, mn, root.val)
+            r = isValidBST1(root.right, root.val, mx)
+            return r*l
+        return isValidBST1(root, float('-inf'), float('inf'))
+        
+        
 
 
 
