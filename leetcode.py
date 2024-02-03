@@ -1127,8 +1127,32 @@ class Solution:
             return r*l
         return isValidBST1(root, float('-inf'), float('inf'))
         
-        
+# 102. Binary Tree Level Order Traversal       
+# Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 
+class Solution:
+    def levelOrder(self, root):
+        if not root:
+            return []
+        result = {0:[root.val]}
+
+        def levelvals(root, level):
+            if not root:
+                return 
+            l = levelvals(root.left, level+1)
+            r = levelvals(root.right, level+1)
+            if level not in result and (l!=None or r!=None):
+                result[level] = []
+            if l!=None: 
+                result[level].append(l)
+            if r!=None:
+                result[level].append(r)
+
+            return root.val
+
+        levelvals(root, 1)
+        print(result)
+        return list(dict(sorted(result.items())).values())
 
 
 
