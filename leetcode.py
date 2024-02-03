@@ -999,5 +999,40 @@ class Solution:
                     result[i].append(min(result[i-1][j]+grid[i][j], grid[i][j] + result[i][j-1]))
         return result[m-1][n-1]
 
+# 73. Set Matrix Zeroes
+# Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+# You must do it in place.
+
+class Solution:
+    def setZeroes(self, matrix):
+        m = len(matrix)
+        n = len(matrix[0])
+        zrr = []
+        zrc = []
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j]==0:
+                    zrr.append(i)
+                    zrc.append(j)
+        for i in zrr:
+            for j in range(n):
+                matrix[i][j]=0
+        for j in zrc:
+            for i in range(m):
+                matrix[i][j]=0
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
