@@ -1155,6 +1155,30 @@ class Solution:
         return list(dict(sorted(result.items())).values())
 
 
+# 128. Longest Consecutive Sequence
+# Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+# You must write an algorithm that runs in O(n) time.
+
+class Solution:
+    def longestConsecutive(self, nums) -> int:
+        nums.sort()
+        j = 1
+        m = 1
+        if nums ==[]:
+            return 0
+        cm = nums[0]
+        for i in range(1, len(nums)):
+            if nums[i]==cm+1:
+                j += 1
+                cm = nums[i]
+            elif nums[i]!=cm:
+                if j>=m:
+                    m = j
+                j = 1
+                cm = nums[i]
+        if j>=m:
+            m = j
+        return m
 
 
 
