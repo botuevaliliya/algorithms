@@ -1197,3 +1197,27 @@ class Solution:
             head = head.next
         return head
 
+
+# 114. Flatten Binary Tree to Linked List
+# Given the root of a binary tree, flatten the tree into a "linked list":
+# The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.
+# The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+
+class Solution:
+    def flatten(self, root) -> None:
+
+        def depth(tree):
+            if not tree:
+                return 
+            
+            l = depth(tree.left)
+            r = depth(tree.right)
+
+            if tree.left:
+                l.right = tree.right
+                tree.right = tree.left
+                tree.left = None
+            last = r or l or tree
+            return last
+            
+        depth(root)
