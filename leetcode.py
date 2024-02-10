@@ -1221,3 +1221,94 @@ class Solution:
             return last
             
         depth(root)
+
+# 53. Maximum Subarray
+# Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+class Solution:
+    def maxSubArray(self, nums):
+        # result = []
+        # n = len(nums)
+
+        # def arraysum(nums, i, j):
+        #     result.append(sum(nums[i:j+1]))
+        #     if i+1<=j:
+        #         arraysum(nums, i+1, j)
+        #         arraysum(nums, i, j-1)
+        #     return
+            
+        # arraysum(nums, 0, n-1)
+        # return max(result)
+
+        # local max->sum between local max->merge close local max if improve
+        # local_max_or_pos = {}
+        # between_locals = {}
+        # n = len(nums)
+        # if n==1:
+        #     return nums[0]
+        # last_key = -1
+        # max_pos = -2
+        # for i in range(n):
+        #     if nums[i]>=0:
+        #         if max_pos==i-1:
+        #             local_max_or_pos[last_key] += nums[i]
+        #             max_pos = i
+        #         elif last_key!=i-1 or last_key==-1:
+        #             local_max_or_pos[i] = nums[i]
+        #             last_key = i
+        #             max_pos = i
+        #         else:
+        #             local_max_or_pos[last_key] += nums[i]
+        #             max_pos = i
+        #     elif i==0 and nums[i]>=nums[i+1]:
+        #         local_max_or_pos[i] = nums[i]
+        #         last_key = i
+        #     elif i==n-1 and nums[i]>=nums[i-1]:
+        #         local_max_or_pos[i] = nums[i]
+        #         last_key = i
+        #     elif nums[i]>=nums[i-1] and nums[i]>=nums[i+1]:
+        #         local_max_or_pos[i] = nums[i]
+        #         last_key = i
+        #     elif local_max_or_pos!={}:
+        #         if last_key==i-1 or max_pos==i-1:
+        #             between_locals[last_key] = nums[i]
+        #         else:
+        #             between_locals[last_key] += nums[i]
+            
+        # lm = list(local_max_or_pos.values())
+        # if len(lm)==1:
+        #     return lm[0]
+        # bl = list(between_locals.values())
+        # i = 1
+        # while i<len(lm) and i<=len(bl):
+        #     if lm[i-1]>-bl[i-1] and lm[i]>-bl[i-1]:
+        #         lm[i] += lm[i-1]+bl[i-1]
+        #     i += 1
+        # return max(lm)
+
+        s = nums[0]
+        mx = s
+        for i in range(1, len(nums)):
+            s += nums[i]
+            if s>=mx:
+                mx = s
+            if nums[i]>=mx:
+                mx = nums[i]
+                s = nums[i]
+            elif nums[i]>=s:
+                s = nums[i]
+            
+        return max(s, mx)
+            
+
+
+
+
+
+
+
+
+
+
+
+
