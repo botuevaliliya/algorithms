@@ -1301,9 +1301,37 @@ class Solution:
         return max(s, mx)
             
 
+# 131. Palindrome Partitioning
+# Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
+class Solution:
+    def partition(self, s):
+        result = []
 
-
+        def comb(lst, s, f):
+            n = len(s)
+            if n == 1:
+                lst.append(s)
+                # print('end')
+                result.append(lst)
+                return
+            for i in range(1, n+1):
+                if f==1:
+                    lst = []
+                x = i//2
+                # print(s[:x], s[i-1:i-x-1:-1], s, x, i, s[:i], s[i:])
+                if s[:x]==s[i-1:i-x-1:-1] or i==1:
+                    # print('congrats')
+                    if i==n:
+                        result.append(lst + [s[:i]])
+                        return
+                    else:
+                        # print('HERE', lst, s[:i])
+                        comb(lst + [s[:i]], s[i:], 0)
+                
+        comb([], s, 1)
+        
+        return result
 
 
 
