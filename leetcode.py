@@ -1357,7 +1357,36 @@ class Solution:
         return current_row[n]
             
             
+# 79. Word Search
+# Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+# The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+class Solution:
+    def exist(self, board, word):
+        shape = [len(board), len(board[0])]
+        word = list(word)
+        l = len(word)
+
+        def letter(i, j, k, l, mp):
+            # print(i, j, mp, k, word[k])
+            if k == l: 
+                return True
+            if i<0 or j<0 or i>=shape[0] or j>=shape[1] or k>=l:
+                return False
+            if board[i][j]!=word[k]:
+                return False
+            if [i,j] in mp:
+                return False
+            mp = mp[:k]
+            mp.append([i,j])
+            return letter(i+1, j, k+1, l, mp) or letter(i-1, j, k+1, l, mp) or letter(i, j+1, k+1, l, mp) or letter(i, j-1, k+1, l, mp)
 
 
+        for i in range(shape[0]):
+            for j in range(shape[1]):
+                # mp = [[0] * shape[1] for p in range(shape[0])]
+                if letter(i, j, 0, l, [])==True:
+                    return True
+        return False
 
 
