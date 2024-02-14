@@ -1390,3 +1390,46 @@ class Solution:
         return False
 
 
+
+# 105. Construct Binary Tree from Preorder and Inorder Traversal
+# Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def buildTree(self, preorder, inorder):
+        l = len(preorder)
+        root = TreeNode(preorder[0])
+        parent = [0]
+        
+        def dfs(i, j, link):
+            if j==i:
+                return link
+            k = i
+            while k<=j and preorder[parent[0]]!=inorder[k]:
+                k += 1
+            if k>i:
+                parent[0] += 1
+                ln = dfs(i, k-1, TreeNode(preorder[parent[0]]))
+                link.left = ln
+            if k<j:
+                parent[0] += 1
+                rn = dfs(k+1, j, TreeNode(preorder[parent[0]]))
+                link.right = rn
+            return link
+
+        dfs(0, l-1, root)
+        return root 
+
+
+
+
+
+
+
+
