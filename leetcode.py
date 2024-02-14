@@ -1468,6 +1468,44 @@ class Solution:
         return save_new1
 
 
+# 146. LRU Cache
+# Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+# The functions get and put must each run in O(1) average time complexity.
 
 
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cache = {}
+        self.capacity = capacity
+        self.list_cache = []
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        if key in self.list_cache:
+            self.list_cache.remove(key)
+        self.list_cache.append(key)
+        if len(self.list_cache)>self.capacity:
+            if self.list_cache[0] in self.cache:
+                self.cache.pop(self.list_cache[0])
+            self.list_cache = self.list_cache[1:]
+        return self.cache[key]
+        
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.list_cache:
+            self.list_cache.remove(key)
+        self.list_cache.append(key)
+        if len(self.list_cache)>self.capacity:
+            if self.list_cache[0] in self.cache:
+                self.cache.pop(self.list_cache[0])
+            self.list_cache = self.list_cache[1:]
+        self.cache[key] = value
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
 
