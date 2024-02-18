@@ -1509,3 +1509,45 @@ class LRUCache:
 # param_1 = obj.get(key)
 # obj.put(key,value)
 
+
+
+# 139. Word Break
+# Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+# Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+class Solution:
+    def wordBreak(self, s, wordDict):
+        l = len(s)
+        n = len(wordDict)
+        # if set(s) - set(''.join(wordDict))!=set():
+        #     return False
+    
+        # def dfs(n, s, j, l):
+        #     # print('NEW ITERATION ', j, l)
+        #     if j==l:
+        #         return True
+        #     for t in range(n):
+        #         if s[j]!=wordDict[t][0]:
+        #             continue
+        #         k = len(wordDict[t])
+        #         if j+k<=l and s[j:j+k]==wordDict[t]:
+        #             if dfs(n, s, j+k, l):
+        #                 return True
+        #     return False
+
+        # return dfs(n,s,0,l)
+        flags = [0]*l
+        for j in range(l-1, -1, -1):
+            for t in range(n):
+                if s[j]!=wordDict[t][0]:
+                    continue
+                k = len(wordDict[t])
+                if j+k<=l and s[j:j+k]==wordDict[t]:
+                    if (j+k<l and flags[j+k]==1) or j+k>=l:
+                        flags[j] = 1
+                        break
+        # print(flags)
+        if flags[0]==1:
+            return True
+        return False
+                
