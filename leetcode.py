@@ -1704,3 +1704,30 @@ class MinStack:
 # obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.getMin()
+
+
+
+# 198. House Robber
+# You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+# Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        s = 0 
+        n = len(nums)
+        if n==1:
+            return nums[0]
+        i = 1
+        f = [0] * n
+        for i in range(n):
+            if i<2:
+                f[i] = nums[i]
+            elif i==2:
+                f[i] = f[0] + nums[i]
+            else:
+                f[i] = max(f[i-2], f[i-3]) + nums[i]
+        return max(f[-1], f[-2])
+
+
+
+	    
