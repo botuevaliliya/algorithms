@@ -1606,4 +1606,22 @@ class Solution:
         return mergeSort(head)
 
 
+# 152. Maximum Product Subarray
+# Given an integer array nums, find a subarray that has the largest product, and return the product.
+# The test cases are generated so that the answer will fit in a 32-bit integer.
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = max(nums)
+        maxs = 1
+        mins = 1
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                maxs = 1
+                mins = 1
+                continue
+            maxs, mins = max(maxs * nums[i], mins * nums[i], nums[i]), min(maxs * nums[i], mins * nums[i], nums[i])
+            res = max(res, maxs)
+
+        return res
 
