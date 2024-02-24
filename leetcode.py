@@ -1550,4 +1550,60 @@ class Solution:
         if flags[0]==1:
             return True
         return False
+
+# 148. Sort List
+# Given the head of a linked list, return the list after sorting it in ascending order.
+
+class Solution:
+    def sortList(self, head):
+        if not head:
+            return None
+
+        def split(head):
+            mid = head
+            fast = head
+            prev = None
+            while fast and fast.next:
+                prev = mid
+                mid = mid.next
+                fast = fast.next.next
+            prev.next = None
+            return head, mid
+
+        def mergeSort(arr):
+            if arr.next:
+                L, R = split(arr)
+                # print('SPLIT', L, R)
+                L = mergeSort(L)
+                R = mergeSort(R)
+                # print('MERGE DOESNT WORK HERE ', L, R)
+                node = ListNode()
+                node_cpy = node
+
+                while L and R:
+                    # print(L, R)
+                    if L.val<=R.val:
+                        # print('OK')
+                        node.next = L
+                        tmp = L.next
+                        L.next = R
+                        # R = R.next 
+                        L = tmp
+                    else:
+                        # print('SWITCH')
+                        node.next = R
+                        tmp = R.next
+                        R.next = L
+                        # L = L.next
+                        R = tmp
+                        # print('R rn', R, 'KEY, L too ', L, 'maybe node fine', node)
+                    node = node.next
                 
+                return node_cpy.next
+            else:
+                return arr
+
+        return mergeSort(head)
+
+
+
