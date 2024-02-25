@@ -1879,9 +1879,37 @@ class Solution:
         return True
 
 
+# 230. Kth Smallest Element in a BST
+# Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        result = []
 
-
+        def depth(tree):
+            if not tree:
+                return 
+            depth(tree.left)
+            depth(tree.right)
+            # print(l, r, tree)
+            # if l and r:
+            #     r += 1
+            # if l==k:
+            #     result.append(tree.left.val)
+            # if r==k:
+            #     result.append(tree.right.val)
+            # if r+1==k:
+            result.append(tree.val)
+        
+        depth(root)
+        # print(result)
+        return sorted(result)[k-1]
 
 
