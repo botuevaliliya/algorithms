@@ -2000,5 +2000,15 @@ class Solution:
         return max(lis)
 
 
+# 347. Top K Frequent Elements
+# Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
-	    
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        hashm = {i:0 for i in set(nums)}
+        # print(hashm)
+        for i in range(len(nums)):
+            hashm[nums[i]] += 1
+        hashm = dict(sorted(hashm.items(), key=lambda x:x[1], reverse=True))
+        return list(hashm.keys())[:k]
