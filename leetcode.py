@@ -1800,3 +1800,40 @@ class Solution:
 
         depth(root, 0)
         return result
+
+# 215. Kth Largest Element in an Array
+# Given an integer array nums and an integer k, return the kth largest element in the array.
+# Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+class Solution:
+    def findKthLargest(self, nums, k):
+        def mergeSort(arr):
+            if len(arr) > 1:
+                mid = len(arr)//2
+                L = arr[:mid]
+                R = arr[mid:]
+                mergeSort(L)
+                mergeSort(R)
+                i = j = k = 0
+
+                while i < len(L) and j < len(R):
+                    if L[i] <= R[j]:
+                        arr[k] = L[i]
+                        i += 1
+                    else:
+                        arr[k] = R[j]
+                        j += 1
+                    k += 1
+
+                while i < len(L):
+                    arr[k] = L[i]
+                    i += 1
+                    k += 1
+
+                while j < len(R):
+                    arr[k] = R[j]
+                    j += 1
+                    k += 1
+        mergeSort(nums)
+        return nums[-k]
+
