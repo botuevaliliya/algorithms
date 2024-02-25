@@ -1780,3 +1780,23 @@ class Solution:
                     island += 1
                     dfs(grid, vis, n, m, i, j)
         return island
+
+
+# 199. Binary Tree Right Side View
+# Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+class Solution:
+    def rightSideView(self, root):
+        result = []
+
+        def depth(tree, dpt):
+            if not tree:
+                return 
+            if len(result)==dpt:
+                result.append(tree.val)
+            depth(tree.right, dpt+1)
+            depth(tree.left, dpt+1)
+            return 
+
+        depth(root, 0)
+        return result
