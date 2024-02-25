@@ -1937,3 +1937,50 @@ class Solution:
                 nums[i] = p//nums[i]
         return nums
 
+
+# 287. Find the Duplicate Number
+# Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+# There is only one repeated number in nums, return this repeated number.
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        # s = 0
+        # k = 0
+        # for i in nums:
+        #     s += i
+        # for t in range(1, len(nums)):
+        #     k += t
+        # return s-k
+
+        # f = 0
+        # i = 0 
+        # while True:
+        #     if (f==0 and nums[i]==i+1) or (nums[i]==-1):
+        #         nums[i] = 0
+        #         i = 0 
+        #         while nums[i]==0:
+        #             i += 1
+        #     elif f==0 and nums[i]!=i+1:
+        #         nums[i], i = -1, nums[i]-1
+        #         f = 1
+        #     elif f!=0 and nums[i]==i+1:
+        #         return i+1
+        #     elif nums[i] == 0:
+        #         return i+1
+        #     elif nums[i]==i+1 and f==1:
+        #         return i+1
+        #     else:
+        #         nums[i], i = 0, nums[i] - 1
+        #     print(nums[i], i)
+
+        # visited = []
+        # for i in nums:
+        #     if i in visited:
+        #         return i
+        #     visited.append(i)
+        
+        nums.sort()
+        for i in range(1, len(nums)):
+            if nums[i]==nums[i-1]:
+                return nums[i]
+
