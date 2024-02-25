@@ -1837,3 +1837,51 @@ class Solution:
         mergeSort(nums)
         return nums[-k]
 
+
+# 207. Course Schedule
+# There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+# For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+# Return true if you can finish all courses. Otherwise, return false.
+
+class Solution:
+    def canFinish(self, numCourses, prerequisites):
+        if prerequisites==[]:
+            return True
+        courses = {}
+        for i in prerequisites:
+            if i[0]==i[1]:
+                return False
+            if i[1] not in courses:
+                courses[i[1]] = [i[0]]
+            else:
+                courses[i[1]].append(i[0])
+            if i[0] in courses and i[1] in courses[i[0]]:
+                return False
+                # courses[i[0]].remove(i[1])
+                # courses[i[1]].remove(i[0])
+
+        def check_cycle(i, j):
+            # print('CYCLE', i, j, visited)
+            if i in visited:
+                # print('ahh?')
+                return False
+            visited.append(i)
+            for el in j:
+                if el in courses:
+                    return check_cycle(el, courses[el])
+            # return True
+
+        for i, j in courses.items():
+            visited = []
+            if check_cycle(i, j)==False:
+                # print('here')
+                return False
+        return True
+
+
+
+
+
+
+
+
