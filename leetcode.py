@@ -1729,5 +1729,54 @@ class Solution:
         return max(f[-1], f[-2])
 
 
-
+# 200. Number of Islands
+# Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+# An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
 	    
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        n, m = len(grid), len(grid[0])
+        island = 0
+        # for i in range(n):
+        #     for j in range(m):
+        #         if grid[i][j]=='1':
+        #             if s==0:
+        #                 s += 1
+        #             elif i>0 and j>0 and grid[i-1][j]=='1' and grid[i][j-1]=='1' and grid[i-1][j-1]=='0' and ((j>1 and grid[i][j-2]=='0') or (j<=1)):
+        #                 # print('FIRST')
+        #                 s -= 1
+        #             elif i==1 and j>0 and grid[i-1][j]=='1' and grid[i-1][j-1]=='0':
+        #                 # print('SECOND')
+        #                 s -= 1
+        #             elif j>0 and grid[i][j-1]=='1':
+        #                 pass
+        #             elif i>0 and grid[i-1][j]=='1':
+        #                 pass
+        #             else:
+        #                 s += 1
+        #         # print(i, j, s)
+        # return s
+        delRow = [1, -1, 0, 0]
+        delCol = [0, 0, -1, 1]
+
+        def dfs(grid, vis, n, m, row, col):
+            if row < 0 or row >= n or col < 0 or col >= m or vis[row][col] == 1:
+                return
+
+            vis[row][col] = 1
+
+            for i in range(4):
+                nRow = row + delRow[i]
+                nCol = col + delCol[i]
+
+                if 0 <= nRow < n and 0 <= nCol < m and grid[nRow][nCol] == '1' and vis[nRow][nCol] == 0:
+                    dfs(grid, vis, n, m, nRow, nCol)
+                    
+        vis = [[0] * m for _ in range(n)]
+
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == '1' and vis[i][j] == 0:
+                    island += 1
+                    dfs(grid, vis, n, m, i, j)
+        return island
