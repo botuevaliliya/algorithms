@@ -1913,3 +1913,27 @@ class Solution:
         return sorted(result)[k-1]
 
 
+# 238. Product of Array Except Self
+# Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        p = 1
+        zp = 0
+        for i in nums:
+            if i==0:
+                zp += 1
+            else:
+                p *= i
+
+        for i in range(len(nums)):
+            if zp==1 and nums[i]!=0:
+                nums[i] = 0
+            elif zp>1:
+                nums[i] = 0
+            elif nums[i]==0:
+                nums[i] = p
+            else:
+                nums[i] = p//nums[i]
+        return nums
+
