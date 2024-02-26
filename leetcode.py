@@ -2012,3 +2012,85 @@ class Solution:
             hashm[nums[i]] += 1
         hashm = dict(sorted(hashm.items(), key=lambda x:x[1], reverse=True))
         return list(hashm.keys())[:k]
+
+# 394. Decode String
+# Given an encoded string, return its decoded string.
+# The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+class Solution:
+    def decodeString(self, s: str) -> str:
+        # result = ''
+        # i = 0
+
+        # def parse(word, x):
+        #     i = 0 
+        #     k = 0
+        #     tmp = ''
+        #     while i<x:
+        #         if word[i] in '1234567890':
+        #             k = 0 
+        #         while i<x and word[i] in '1234567890':
+        #             k = k*10+int(word[i])
+        #             i += 1
+        #         # print('KKKKK', k, word[i:])
+        #         if word[i]=='[':
+        #             i += 1
+        #         while i<x and word[i] not in '1234567890[]':
+        #             tmp += word[i]
+        #             i += 1
+        #         while i<x and word[i]==']':
+        #             i += 1
+        #         if i<x and word[i] in '1234567890':
+        #             xx = shifter(word[i:])
+        #             tmp += parse(word[i:], xx)
+        #             i += xx
+        #     # print(max(1, k), tmp)
+        #     return tmp * max(1, k)
+
+        # def shifter(word):
+        #     i = 0 
+        #     k = 0
+        #     f = 0 
+        #     while i<len(word) and (k>0 or f==0):
+        #         if word[i]=='[':
+        #             k += 1
+        #         if word[i]==']':
+        #             k -= 1
+        #         i += 1
+        #         if k>0:
+        #             f=1
+                
+        #     return i
+
+        # while i<len(s):
+        #     while i<len(s) and s[i] not in '1234567890':
+        #         result += s[i]
+        #         i += 1
+        #     x = shifter(s[i:])
+        #     result += parse(s[i:], x)
+        #     i += x 
+        #     # print('RESULT', result, s[i:])
+        
+        # return result
+        stack = []
+        curr_str = ""
+        curr_num = 0
+        for c in s:
+            if c.isdigit():
+                curr_num = curr_num * 10 + int(c)
+            elif c == "[":
+                stack.append(curr_num)
+                stack.append(curr_str)
+                curr_num = 0
+                curr_str = ""
+            elif c == "]":
+                prev_str = stack.pop()
+                prev_num = stack.pop()
+                curr_str = prev_str + curr_str * prev_num
+            else:
+                curr_str += c
+        while stack:
+            curr_str = stack.pop() + curr_str
+        
+        return curr_str
+
