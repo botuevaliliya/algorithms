@@ -2094,3 +2094,34 @@ class Solution:
         
         return curr_str
 
+
+
+# 322. Coin Change
+# You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+# Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+# You may assume that you have an infinite number of each kind of coin.
+
+
+class Solution:
+    def coinChange(self, coins, amount):
+        if amount==0:
+            return 0
+        lst = [0] * amount
+        for i in range(1, amount+1):
+            mn = 10001
+            for j in coins:
+                if j<=i:
+                    mn = min(lst[i-1-j]+1, mn)
+                    # print(i, j, lst[i-j])
+            lst[i-1] = mn
+            # print(lst, i, j)
+        if mn==0 or mn==10001:
+            return -1
+        return mn
+
+
+
+
+
+
+
