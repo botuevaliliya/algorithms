@@ -2120,8 +2120,41 @@ class Solution:
         return mn
 
 
+# 236. Lowest Common Ancestor of a Binary Tree
+# Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+# According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
 
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # result = [0, 0]
+        # ans = []
 
+        # def depth(tree):
+        #     if not tree:
+        #         return 
+        #     depth(tree.left)
+        #     depth(tree.right)
+        #     # print(tree.val, p.val, q.val)
+        #     if tree.val==p.val:
+        #         result[0] = 1 
+        #     if tree.val==q.val:
+        #         result[1] = 1
+        #     if result==[1, 1]:
+        #         ans.append(tree.val)
+        #         return
+        
+        # depth(root)
+        # # print(result, ans)
+        # return ans[-1]
 
+        if not root or root == p or root == q:
+            return root
+
+        l = self.lowestCommonAncestor(root.left, p, q)
+        r = self.lowestCommonAncestor(root.right, p, q)
+
+        if l and r:
+            return root
+        return l or r
 
 
