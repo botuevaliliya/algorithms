@@ -2253,3 +2253,53 @@ class Solution:
                     return True
             all_sum_comb = all_sum_comb | tmp
         return False
+
+
+# 560. Subarray Sum Equals K
+# Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+# A subarray is a contiguous non-empty sequence of elements within an array.
+
+class Solution:
+    def subarraySum(self, nums, k):
+        # t = 0
+        # f = 0
+        # all_sum_comb = set([0])
+        # for i in range(len(nums)):
+        #     tmp = set()
+        #     for j in all_sum_comb:
+        #         tmp.add(j+nums[i])
+        #         if j+nums[i]==k:
+        #             t += 1
+        #         if nums[i]==0:
+        #             f = 1
+        #     all_sum_comb = all_sum_comb | tmp
+        
+        # if f==1:
+        #     t = (t-1)*2+1
+        # return t
+        # n = len(nums)
+        # cpy = [0] * n
+        # im, s, t = 0, 0, 0
+        # for i in range(n):
+        #     for j in range(i+1):
+        #         cpy[j] += nums[i]
+        #         if cpy[j]==k:
+        #             t += 1
+        # return t
+
+        t, ss = 0, 0
+        has = {0 : 1}
+
+        for i in nums:
+            ss += i
+            if ss - k in has:
+                t += has[ss - k]
+            if ss not in has:
+                has[ss] = 1
+            else:
+                has[ss] += 1
+
+        return t
+            
+
+
