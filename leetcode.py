@@ -2208,3 +2208,48 @@ class Solution:
         return result
 
 			
+# 416. Partition Equal Subset Sum
+# Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        summ = sum(nums)
+        nums = sorted(nums)
+        if summ%2==1 or nums[-1]>summ//2:
+            return False
+
+        # def make_dict(word):
+        #     d = {i:0 for i in set(word)}
+        #     result = []
+        #     for i in word:
+        #         d[i] += 1
+        #     for i, j in d.items():
+        #         if j%2==1:
+        #             result += [i] * j
+        #     return result
+        
+        # nums = make_dict(nums)
+        # print(nums)
+        ss = sum(nums)//2
+
+        # def yes_or_no(ss, i):
+        #     if ss==0:
+        #         return True
+        #     if i==len(nums):
+        #         return False
+        #     for t in range(i, len(nums)):
+        #         l = yes_or_no(ss-nums[t], i+1)
+        #         n = yes_or_no(ss, i+1)
+        #         return l or n
+
+        # return yes_or_no(ss, 0)
+
+        all_sum_comb = set([0])
+        for i in range(len(nums)):
+            tmp = set()
+            for j in all_sum_comb:
+                tmp.add(j+nums[i])
+                if j+nums[i]==ss:
+                    return True
+            all_sum_comb = all_sum_comb | tmp
+        return False
