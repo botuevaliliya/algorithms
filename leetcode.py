@@ -2339,9 +2339,89 @@ class Solution:
         return result[n][m]
 
 
+# 994. Rotting Oranges
+# You are given an m x n grid where each cell can have one of three values:
+# 0 representing an empty cell,
+# 1 representing a fresh orange, or
+# 2 representing a rotten orange.
+# Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+# Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
 
+class Solution:
+    def orangesRotting(self, grid):
+        # n, m = len(grid), len(grid[0])
+        # f = [[0]*m for i in range(n)]
+        # r = [0]
+        # rotten_oranges = []
 
+        # def check_cell(i, j, n, m):
+        #     if (i==0 or grid[i-1][j]==0) and (i==n-1 or grid[i+1][j]==0) and (j==0 or grid[i][j-1]==0) and (j==m-1 or grid[i][j+1]==0):
+        #         return 0
+        #     return 1
 
+        # def dfs(i, j, n, m, d):
+        #     grid[i][j] = 0
+        #     f[i][j] = 1
+        #     if (i==0 or grid[i-1][j]==0) and (i==n-1 or grid[i+1][j]==0) and (j==0 or grid[i][j-1]==0) and (j==m-1 or grid[i][j+1]==0):
+        #         r[0] = max(r[0], d)
+        #         return 
+        #     if i>0 and f[i-1][j]==0 and grid[i-1][j]==1:
+        #         dfs(i-1, j, n, m, d+1)
+        #     if i<n-1 and f[i+1][j]==0 and grid[i+1][j]==1:
+        #         dfs(i+1, j, n, m, d+1)
+        #     if j>0 and f[i][j-1]==0 and grid[i][j-1]==1:
+        #         dfs(i, j-1, n, m, d+1)
+        #     if j<m-1 and f[i][j+1]==0 and grid[i][j+1]==1:
+        #         dfs(i, j+1, n, m, d+1)
+
+        # for i in range(n):
+        #     for j in range(m):
+        #         if grid[i][j]==1:
+        #             if not check_cell(i, j, n, m):
+        #                 return -1
+        #         if grid[i][j]==2:
+        #             rotten_oranges.append([i, j])
+        # for k in rotten_oranges:
+        #     dfs(k[0], k[1], n, m, 0)
+        # distance = 0
+        # for i in range(n):
+        #     for j in range(m):
+        #         if grid[i][j]==1:
+        #             tmp = float("inf")
+        #             for k in rotten_oranges:
+        #                 tmp = min(tmp, abs(k[0]-i)+abs(k[1]-j))
+        #             distance = max(distance, tmp)
+        # return distance
+
+        queue = deque()
+        n,m = len(grid),len(grid[0])
+        count, time = 0, -1
+        dirs = [(1,0),(0,1),(-1,0),(0,-1)]
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j]==1:
+                    count+=1
+                elif grid[i][j]==2:
+                    queue.append((i,j))
+        while len(queue)>0:
+            rotten = []
+            while len(queue)>0:
+                rotten.append(queue.popleft())
+            for orange in rotten:
+                i,j = orange
+                for a,b in dirs:
+                    new_i, new_j = i+a, j+b
+                    if 0<=new_i<n and 0<=new_j<m and grid[new_i][new_j]==1:
+                        count-=1
+                        grid[new_i][new_j]=2
+                        queue.append((new_i,new_j))
+            time+=1
+        if not count:
+            return max(time,0)
+        else:
+            return -1
+
+        
 
 
 
