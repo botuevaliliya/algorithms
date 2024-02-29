@@ -2422,6 +2422,63 @@ class Solution:
             return -1
 
         
+# 567. Permutation in String
+# Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+# In other words, return true if one of s1's permutations is the substring of s2.
 
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        def make_dict(word):
+            d = {i:0 for i in set(word)}
+            for i in word:
+                d[i] += 1
+            return d
 
-
+        n, m = len(s1), len(s2)
+        # print(n, m)
+        if n>m:
+            return False
+        d = make_dict(s1)
+        i, f, k = 0, 1, 0
+        max_k = 0
+        min_s = 10000
+        while i<m:
+            if s2[i] not in d:
+                f, k = 1, 0
+                # print('AHA', i)
+            else:
+                if f==1:
+                    cp = d.copy()
+                    f, k = 0, 0
+                cp[s2[i]] -= 1
+                k += 1
+                if cp[s2[i]]<0:
+                    # if d[s2[i]]>1:
+                        # print('IF THERE IS ', d[s2[i]])
+                    while s2[i-k+1]!=s2[i]:
+                        cp[s2[i-k+1]] += 1
+                        k -= 1
+                    cp[s2[i]] += 1
+                    k -= 1
+                    # else:
+                    #     # print('CP ', k, s2[i-k+1], i, cp)
+                    #     cp[s2[i-k+1]] += 1
+                    #     if s2[i-k+1]!=s2[i]:
+                    #         cp[s2[i]] += 1
+                    #     k -= 1
+                # max_k = max(max_k, k)
+                # if sum(cp.values())==1:
+                #     print(cp, s2[i+2:i-k-3:-1])
+                # min_s = min(min_s, sum(cp.values()))
+                # print('FINAL:', k, cp, max(cp.values()))
+                if max(cp.values())==0:
+                    return True
+            i += 1
+        # print(max_k, min_s)
+        # if max_k==n:
+        #     return True
+        # print(max_k)
+        return False
+                
+                
+                   
