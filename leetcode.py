@@ -2522,7 +2522,48 @@ class Solution:
             lists = new_list
         
         return lists[0]
-            
+
+
+# 32. Longest Valid Parentheses
+# Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses 
+# substring.
+
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        if s=='':
+            return 0
+        n = len(s)
+        st = 0 
+        i = 0
+        m = 0
+        d = {'(':0, ')':0}
+        while i<n:
+            d[s[i]] += 1
+            if d[')']>d['(']:
+                if d[')'] + d['('] - 1 > m:
+                    m = d[')'] + d['('] - 1
+                st = i
+                d['('] = 0
+                d[')'] = 0
+            i += 1
+   
+        i -= 1
+        if d['(']>d[')'] or s[i]=='(':
+            while i>=st: 
+                d['('] = 0
+                d[')'] = 0
+                while i>=st and s[i]=='(':
+                    i -= 1
+                while i>=st and d[')']>=d['(']:
+                    d[s[i]] += 1
+                    i -= 1
+                if min(d['('], d[')']) * 2 > m:
+                    m = min(d['('], d[')']) * 2
+        else:
+            if min(d['('], d[')']) * 2 > m:
+                m = min(d['('], d[')']) * 2
+
+        return m
 
 
 
