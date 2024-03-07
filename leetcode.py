@@ -2562,12 +2562,25 @@ class Solution:
         else:
             if min(d['('], d[')']) * 2 > m:
                 m = min(d['('], d[')']) * 2
-
         return m
 
 
+# 41. First Missing Positive
+# Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.
+# You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.
 
-
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        has = {}
+        for i in nums:
+            if i>0:
+                has[i] = 0
+            
+        for i in range(1, n+1):
+            if i not in has:
+                return i
+        return i+1
 
 
 
