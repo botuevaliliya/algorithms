@@ -2626,4 +2626,54 @@ class Solution:
         return max_max
             
 
+# 84. Largest Rectangle in Histogram
+# Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        # n = len(heights)
+        # if n==1:
+        #     return heights[0]
+        # max_sq = heights[0]
+        # mn = heights[0]
+        # st = 0
+        # for i in range(1, n):
+        #     if heights[i]<mn:
+        #         mn = heights[i]
+        #     curr_sq = mn * (i - st + 1)
+        #     if curr_sq>max_sq:
+        #         max_sq = curr_sq
+        #     if min(heights[i], heights[i-1]) * 2 >= curr_sq:
+        #         if i+1<n and heights[i+1]>mn and mn*(i-st+2)<min(heights[i], heights[i-1], heights[i+1])*3:
+        #             # print(i, curr_sq, max_sq)
+        #             mn = min(heights[i], heights[i-1])
+        #             st = i - 1
+        #             if min(heights[i], heights[i-1]) * 2 > max_sq:
+        #                 max_sq = min(heights[i], heights[i-1]) * 2
+        #         elif min(heights[i], heights[i-1]) * 2 > max_sq:
+        #             max_sq = min(heights[i], heights[i-1]) * 2
+
+        #     if heights[i] > curr_sq:
+        #         mn = heights[i]
+        #         st = i
+        #         if heights[i] > max_sq:
+        #             max_sq = heights[i]
+            
+        # return max_sq
+
+        max_sq = 0
+        stack = []
+        for i, h in enumerate(heights):
+            start = i
+            while stack and stack[-1][1]>h:
+                index, height = stack.pop()
+                max_sq = max(max_sq, height * (i - index))
+                start = index
+            stack.append((start, h))
+        
+        for i, h in stack:
+            max_sq = max(max_sq, h * (len(heights) - i))
+        
+        return max_sq
+
 
