@@ -2582,6 +2582,48 @@ class Solution:
                 return i
         return i+1
 
+# 42. Trapping Rain Water
+# Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
 
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if len(height)<=2:
+            return 0
+
+        def find_local_max(lst):
+            stack = [0] * len(lst)
+            curr_max = lst[0]
+            stack[0] = 0
+            result = [0]
+            for i in range(1, len(lst)):
+                stack[i] = lst[i] - curr_max
+                if lst[i] >= curr_max:
+                    curr_max = lst[i]
+                    result.append(i)
+            if result[-1]!=len(lst)-1:
+                i = len(lst)-2
+                j = result[-1]
+                result.append(i+1)
+                while i>j:
+                    if stack[i]>=stack[result[-1]]:
+                        result.append(i)
+                    i -= 1
+            return sorted(result)
+        
+        local_maxs = find_local_max(height)
+        # print('1', local_maxs)
+        
+        curr = -1
+        max_max, curr_max = 0, 0
+        for i in range(local_maxs[0], local_maxs[-1]):
+            if i==local_maxs[curr+1]:
+                max_max += curr_max
+                curr += 1
+                curr_max = min(height[local_maxs[curr]], height[local_maxs[curr+1]]) * (local_maxs[curr+1]-local_maxs[curr]-1)
+            else:
+                curr_max -= min(height[i], height[local_maxs[curr]], height[local_maxs[curr+1]])
+        max_max += curr_max
+        return max_max
+            
 
 
