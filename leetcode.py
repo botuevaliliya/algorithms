@@ -2748,3 +2748,59 @@ class Solution:
 
         dfs(root)
         return result[0]
+
+# 239. Sliding Window Maximum
+# You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+# Return the max sliding window.
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        # if k==1:
+        #     return nums 
+
+        # def find_max(nums, st, end, cr):
+        #     curr_mx = float('-inf')
+        #     curr_mx_ind = -1
+        #     for i in range(end-1, st-1, -1):
+        #         if nums[i]>curr_mx:
+        #             curr_mx = nums[i]
+        #             curr_mx_ind = i
+        #             if cr!=float('-inf') and curr_mx+1==cr:
+        #                 return curr_mx, curr_mx_ind
+        #     return curr_mx, curr_mx_ind
+        
+        # curr_mx, curr_mx_ind = find_max(nums, 0, k, float('-inf'))
+        # result = [curr_mx]
+        # for i in range(k, len(nums)):
+        #     if i-k+1>curr_mx_ind:
+        #         if nums[i]>=curr_mx:
+        #             curr_mx, curr_mx_ind = nums[i], i
+        #         else:
+        #             curr_mx, curr_mx_ind = find_max(nums, curr_mx_ind+1, i+1, curr_mx)
+        #         result.append(curr_mx)
+        #     elif nums[i]>curr_mx:
+        #         curr_mx, curr_mx_ind = nums[i], i
+        #         result.append(curr_mx)
+        #     else:
+        #         result.append(curr_mx)
+        # return result
+
+        result = []
+        que = deque()
+        l, r = 0, 0
+        n = len(nums)
+
+        while r<n:
+            while que and nums[que[-1]]<nums[r]:
+                que.pop()
+            que.append(r)
+
+            if l>que[0]:
+                que.popleft()
+
+            if (r+1)>=k:
+                result.append(nums[que[0]])
+                l += 1
+            r += 1
+        return result 
